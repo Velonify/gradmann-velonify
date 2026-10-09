@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="de" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GRADMANN 1864 – Parfümerie</title>
+<meta name="description" content="Düfte, Pflege und Geschenke von über 80 Marken – beraten seit 1864. Kostenloser Versand ab 39 €.">
+<link rel="icon" href="img/stempel.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1 class="lines-split rv" id="h1"><span class="ln"><span>Finde deinen</span></span><span class="ln" style="--d:1"><span><em>Duft.</em></span></span></h1>
+        <p class="lede rv" style="--d:3">Über 80 Marken, persönlich beraten seit 1864 – und in jedem Paket steckt ein kleines Geschenk.</p>
+        <div class="hero-cta rv" style="--d:4">
+          <a class="btn btn-primary" href="kollektion.html">Alle Düfte entdecken <svg class="icon arr" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+          <a class="btn btn-ghost" href="kollektion.html?type=set">Sets &amp; Miniaturen</a>
+        </div>
+        <div class="since rv" style="--d:5"><img src="img/stempel.png" alt="" width="58" height="49"><span>Familienunternehmen mit 11 Filialen<br>und Beratung per WhatsApp</span></div>
+      </div>
+      <div class="stage rv" id="stage" style="--d:2" aria-label="Aktuelle Highlights">
+        <div class="ring"></div><div class="ring r2"></div>
+        <img class="bottle sat" id="s1" src="img/p12.jpg" alt="" style="--x:-4;--y:48;--r:-10deg;--k:-14">
+        <img class="bottle sat" id="s2" src="img/p2.jpg" alt="" style="--x:60;--y:6;--r:9deg;--k:16">
+        <img class="bottle main" id="main-b" src="img/lost0.jpg" alt="" style="--x:19;--y:6;--r:0deg;--k:-8" width="1063" height="1063">
+        <div class="dots" id="dots"></div>
+        <div class="stage-card"><div><small id="sc-brand"></small><b id="sc-name"></b></div><a class="btn btn-primary" id="sc-link" href="#">Ansehen</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DUFTFINDER -->
+  <section class="finder" aria-labelledby="fh">
+    <div class="wrap"><div class="finder-box rv">
+      <div><h2 id="fh">Duftfinder</h2><p>In drei Klicks zu passenden Düften.</p></div>
+      <div class="f-steps" id="steps">
+        <div class="f-step" data-k="for"><span>Für wen?</span><div class="chips"><button class="chip on" data-v="">Egal</button><button class="chip" data-v="damen">Damen</button><button class="chip" data-v="herren">Herren</button><button class="chip" data-v="unisex">Unisex</button></div></div>
+        <div class="f-step" data-k="family"><span>Duftrichtung</span><div class="chips"><button class="chip on" data-v="">Alle</button><button class="chip" data-v="süß">Süß</button><button class="chip" data-v="blumig">Blumig</button><button class="chip" data-v="holzig">Holzig</button><button class="chip" data-v="frisch">Frisch</button><button class="chip" data-v="würzig">Würzig</button></div></div>
+        <div class="f-step" data-k="max"><span>Budget</span><div class="chips"><button class="chip on" data-v="">Egal</button><button class="chip" data-v="50">bis 50 €</button><button class="chip" data-v="100">bis 100 €</button></div></div>
+      </div>
+      <div class="f-go"><div class="f-prev" id="fprev"></div><a class="btn btn-primary" id="fgo" href="kollektion.html">Treffer ansehen</a><small id="fcount"></small></div>
+    </div></div>
+  </section>
+
+  <!-- MARKEN -->
+  <div class="marq" aria-label="Marken im Sortiment"><div class="marq-t" id="marq"></div></div>
+
+  <!-- KATEGORIEN -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="lines-split"><span class="ln"><span>Wonach ist dir <em>heute?</em></span></span></h2><a class="link rv" href="kollektion.html">Alle Kategorien</a></div>
+      <div class="bento">
+        <a class="bt b1 wipe" href="kollektion.html?for=damen"><h3>Düfte für Sie</h3><span class="go">Entdecken <i><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></i></span><img src="img/hero-libre.jpg" alt="" loading="lazy"></a>
+        <a class="bt b2 wipe" style="--d:1" href="kollektion.html?for=herren"><h3>Für Ihn</h3><span class="go">Entdecken <i><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></i></span><img src="img/p12.jpg" alt="" loading="lazy"></a>
+        <a class="bt b3 wipe" style="--d:2" href="kollektion.html?cat=Pflege"><h3>Pflege</h3><span class="go">Entdecken <i><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></i></span><img src="img/p9.jpg" alt="" loading="lazy"></a>
+        <a class="bt b4 wipe" style="--d:3" href="kollektion.html?cat=Nische"><h3>Nische</h3><span class="go">Entdecken <i><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></i></span><img src="img/p6.jpg" alt="" loading="lazy"></a>
+        <a class="bt b5 wipe" style="--d:4" href="kollektion.html?type=set"><h3>Sets</h3><span class="go">Entdecken <i><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></i></span><img src="img/p5.jpg" alt="" loading="lazy"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUKT-RAIL -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><h2 class="lines-split"><span class="ln"><span>Gerade <em>beliebt</em></span></span></h2>
+          <div class="tabs rv" style="margin-top:22px" id="tabs" role="group" aria-label="Produktauswahl"><button class="chip on" data-t="new" aria-pressed="true">Neuheiten</button><button class="chip" data-t="top" aria-pressed="false">Beliebt</button><button class="chip" data-t="set" aria-pressed="false">Sets &amp; Miniaturen</button><button class="chip" data-t="u60" aria-pressed="false">Unter 60 €</button></div></div>
+        <div class="rail-nav"><button id="rp" aria-label="Zurück"><svg class="icon" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg></button><button id="rn" aria-label="Weiter"><svg class="icon" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button></div>
+      </div>
+      <div class="rail" id="rail"></div>
+    </div>
+  </section>
+
+  <!-- DUFTWOCHEN -->
+  <section class="sec dark dw">
+    <div class="wrap dw-grid">
+      <div>
+        <h2 class="lines-split"><span class="ln"><span>Duft-</span></span><span class="ln" style="--d:1"><span><em>wochen</em></span></span></h2>
+        <p class="rv">15 % Rabatt auf ausgewählte Düfte und passende Ergänzungsprodukte wie Duschgel, Bodylotion und Deostick.</p>
+        <div class="rv" style="margin-top:32px;--d:2"><a class="btn btn-light" href="kollektion.html?cat=Duftwochen">Aktion ansehen <svg class="icon arr" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+        <small class="rv" style="--d:3">Nicht mit anderen Rabatten kombinierbar. Bereits reduzierte Artikel und einzelne Marken sind ausgenommen.</small>
+      </div>
+      <div class="dw-stack rv" style="--d:2" aria-hidden="true"><img src="img/hero-lavie.jpg" alt="" loading="lazy"><img src="img/lost0.jpg" alt="" loading="lazy"><img src="img/p1.jpg" alt="" loading="lazy"><div class="off">−15<small>%</small></div></div>
+    </div>
+  </section>
+
+  <!-- GESCHENKE -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="lines-split"><span class="ln"><span>Das passende <em>Geschenk</em></span></span></h2><p class="rv" style="max-width:36ch">Nach Budget gefiltert – vom Mini-Set bis zum Nischenduft.</p></div>
+      <div class="gift-row">
+        <a class="gift rv" href="kollektion.html?max=50"><b>bis 50 €</b><small>Miniaturen &amp; Sets</small></a>
+        <a class="gift rv" style="--d:1" href="kollektion.html?max=100"><b>bis 100 €</b><small>Beliebte Eau de Parfum</small></a>
+        <a class="gift rv" style="--d:2" href="kollektion.html?min=100"><b>ab 100 €</b><small>Nische &amp; Limitiertes</small></a>
+      </div>
+      <div class="pgrid" id="giftGrid"></div>
+    </div>
+  </section>
+
+  <!-- VERTRAUEN -->
+  <section class="sec dark">
+    <div class="wrap trust">
+      <div class="trust-stamp rv"><img src="img/stempel.png" alt="Gradmann 1864 Stempel"><div class="core">Seit<br>1864</div></div>
+      <ul class="tl">
+        <li class="rv"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s7-6.200 7-11.500a7 7 0 1 0-14 0C5 14.800 12 21 12 21Z"/><circle cx="12" cy="9.500" r="2.500"/></svg><div><h3>11 Filialen</h3><p>Persönliche Beratung vor Ort in Baden-Württemberg und Bayern – dazu Kosmetikinstitute und Beauty Academy.</p><a class="link" href="#" style="color:#fff">Filiale finden</a></div></li>
+        <li class="rv" style="--d:1"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5Z"/></svg><div><h3>Beratung per WhatsApp</h3><p>Du bist unsicher bei der Duftwahl? Schreib uns – unser Team hilft dir direkt weiter.</p><a class="link" href="#" style="color:#fff">Chat starten</a></div></li>
+        <li class="rv" style="--d:2"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4"/><path d="M5 12v8h14v-8M12 8v12"/></svg><div><h3>Eine Überraschung in jedem Paket</h3><p>Jede Bestellung legen wir ein kleines Geschenk bei.</p></div></li>
+        <li class="rv" style="--d:3"><svg class="icon" viewBox="0 0 24 24"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8"/><circle cx="7" cy="17.500" r="1.800"/><circle cx="17" cy="17.500" r="1.800"/></svg><div><h3>Versand ab 4,40 €, ab 39 € frei</h3><p>Innerhalb Deutschlands. Dazu 3 % Treuerabatt für Stammkunden.</p></div></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script src="js/home.js"></script>
+</body>
+</html>

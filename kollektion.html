@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Düfte – GRADMANN 1864</title>
+<meta name="description" content="Düfte für Damen, Herren und Unisex von über 80 Marken. Filtern nach Duftrichtung, Marke und Preis.">
+<link rel="icon" href="img/stempel.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+
+<main id="main">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Brotkrumen"><a href="index.html">Start</a><span>/</span><a href="kollektion.html">Düfte</a><span>/</span><span aria-current="page" id="crumb">Alle Düfte</span></nav>
+    <div class="coll-hero">
+      <h1 id="title" class="lines-split"><span class="ln"><span>Alle <em>Düfte</em></span></span></h1>
+      <p class="rv" id="intro">Von Klassikern bis Nischenparfum: Filtere nach Duftrichtung, Marke und Budget – und finde in wenigen Klicks deinen Favoriten.</p>
+    </div>
+    <div class="cats rv" id="cats" role="group" aria-label="Schnellauswahl"></div>
+  </div>
+
+  <div class="coll-bar"><div class="wrap coll-bar-in">
+    <button class="btn btn-ghost fbtn" id="fopen" style="--h:44px;padding:0 20px"><svg class="icon" viewBox="0 0 24 24"><path d="M4 7h10m4 0h2M4 17h2m4 0h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>Filter<span id="fn"></span></button>
+    <div class="count" id="count"></div>
+    <label class="sel"><span class="sr">Sortieren</span><span class="pre">Sortieren:</span> <select id="sort"><option value="pop">Beliebtheit</option><option value="new">Neuheiten</option><option value="asc">Preis aufsteigend</option><option value="desc">Preis absteigend</option></select></label>
+    <div class="view" role="group" aria-label="Ansicht"><button data-d="wide" aria-label="Große Ansicht" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="16"/><rect x="13" y="4" width="7" height="16"/></svg></button><button data-d="" aria-label="Standardansicht" aria-pressed="true"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16"/><rect x="9.500" y="4" width="5" height="16"/><rect x="16" y="4" width="5" height="16"/></svg></button><button data-d="dense" aria-label="Kompakte Ansicht" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="3.500" height="7"/><rect x="8.200" y="4" width="3.500" height="7"/><rect x="13.400" y="4" width="3.500" height="7"/><rect x="18.600" y="4" width="2.400" height="7"/><rect x="3" y="13" width="3.500" height="7"/><rect x="8.200" y="13" width="3.500" height="7"/><rect x="13.400" y="13" width="3.500" height="7"/><rect x="18.600" y="13" width="2.400" height="7"/></svg></button></div>
+  </div></div>
+
+  <div class="wrap coll-main">
+    <aside class="facets" id="facets" aria-label="Filter">
+      <div class="fdrawer-x"><h2>Filter</h2><button class="ibtn" id="fclose" aria-label="Filter schließen"><svg class="icon" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <div class="fg"><h3>Für wen</h3><div id="f-for"></div></div>
+      <div class="fg"><h3>Duftrichtung</h3><div id="f-family"></div></div>
+      <div class="fg"><h3>Marke</h3><div id="f-brand"></div></div>
+      <div class="fg"><h3>Art</h3><div id="f-type"></div></div>
+      <div class="fg"><h3>Preis</h3><div class="range"><div class="vals"><span>0 €</span><span id="pv"></span></div><input type="range" id="pr" min="30" max="210" step="5" value="210" aria-label="Maximaler Preis"></div></div>
+      <div class="fg"><label class="ck"><input type="checkbox" id="f-sale"> Nur Aktionsware (−15 %)</label></div>
+      <button class="fclear" id="fclear">Alle Filter zurücksetzen</button>
+    </aside>
+    <div class="fapply" id="fapply"><button class="btn btn-primary btn-block" id="fdone">Ergebnisse anzeigen</button></div>
+    <div class="scrim-f" id="fscrim"></div>
+
+    <section aria-live="polite">
+      <div class="active" id="active"></div>
+      <div class="pgrid" id="grid"></div>
+      <div class="more" id="more"></div>
+      <div class="seo rv"><h2>Parfüm online kaufen bei Gradmann 1864</h2><p>Seit 1864 beraten wir rund um Duft und Pflege. In unserem Online-Shop findest du Klassiker, Neuheiten und Nischendüfte von über 80 Marken – mit kostenlosem Versand ab 39 € und einer kleinen Überraschung in jedem Paket.</p><p>Nutze die Filter nach Duftrichtung, Marke und Preis oder lass dich per WhatsApp von unserem Team beraten.</p></div>
+    </section>
+  </div>
+</main>
+<script src="js/coll.js"></script>
+</body>
+</html>

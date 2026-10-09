@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T12:30:00Z",
+  "title": "Design System: Gradmann 1864 Shop",
+  "extensions": {
+    "colorMeta": {
+      "stamp-navy": { "role": "primary", "displayName": "Stamp Navy", "canonical": "#0e2250", "tonalRamp": ["#050c1e", "#0e2250", "#33446b", "#5b6a8c", "#8e9bc2", "#c8d2ee", "#e9edf4", "#f4f6fa"] },
+      "signal-red": { "role": "secondary", "displayName": "Signal Red", "canonical": "#c8381f", "tonalRamp": ["#5a1409", "#7e1f10", "#a82a14", "#c8381f", "#e0604a", "#ff8b78", "#ffd9d1", "#fff1ee"] },
+      "cool-ground": { "role": "neutral", "displayName": "Cool Ground", "canonical": "#f4f6fa", "tonalRamp": ["#5b6a8c", "#9aa6c0", "#d5dbe7", "#dfe5ef", "#e9edf4", "#f4f6fa", "#fafbfd", "#ffffff"] },
+      "stock-green": { "role": "tertiary", "displayName": "Stock Green", "canonical": "#17794e", "tonalRamp": ["#08301f", "#0f4f33", "#17794e", "#3a9a6e", "#6bb893", "#9ed3b9", "#cfe9dc", "#ecf6f1"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero and collection H1 in upright Bodoni Moda." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles." },
+      "title": { "displayName": "Title", "purpose": "Trust items, drawer and finder titles." },
+      "body": { "displayName": "Body", "purpose": "Hanken Grotesk copy." },
+      "label": { "displayName": "Label", "purpose": "Functional uppercase labels: facet heads, option names, card brand." }
+    },
+    "shadows": [
+      { "name": "float", "value": "0 1px 2px rgba(14,34,80,.06), 0 12px 32px -12px rgba(14,34,80,.22)", "purpose": "Hero stage, finder box, toast." },
+      { "name": "drawer-edge", "value": "-30px 0 60px -30px rgba(14,34,80,.4)", "purpose": "Cart drawer and facet drawer." },
+      { "name": "stack-lift", "value": "0 30px 60px -20px rgba(0,0,0,.5)", "purpose": "Stacked cards on navy Duftwochen section." }
+    ],
+    "motion": [
+      { "name": "ease", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "Single curve for nearly all transitions." },
+      { "name": "fly-to-bag", "value": "850ms cubic-bezier(.5, 0, .2, 1)", "purpose": "Product image flies to the cart icon on add." },
+      { "name": "clip-wipe", "value": "1.2s var(--ease)", "purpose": "Clip-path reveal on images and blocks." },
+      { "name": "line-mask", "value": "1.1s var(--ease), 90ms stagger", "purpose": "Headline lines slide up from an overflow mask." }
+    ],
+    "breakpoints": [
+      { "name": "mobile-s", "value": "520px" },
+      { "name": "mobile", "value": "760px" },
+      { "name": "tablet", "value": "1000px" },
+      { "name": "grid-3", "value": "1100px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Navy pill; red layer wipes up on hover.",
+      "html": "<button class=\"ds-btn\">In den Warenkorb</button>",
+      "css": ".ds-btn{position:relative;overflow:hidden;isolation:isolate;min-height:52px;padding:0 28px;border:0;border-radius:999px;background:var(--stamp-navy,#0e2250);color:#fff;font:600 15px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:.01em;cursor:pointer;transition:transform .35s cubic-bezier(.16,1,.3,1)}.ds-btn::before{content:'';position:absolute;inset:0;background:#c8381f;transform:translateY(101%);transition:transform .45s cubic-bezier(.16,1,.3,1);z-index:-1}.ds-btn:hover::before{transform:none}.ds-btn:active{transform:scale(.97)}.ds-btn:focus-visible{outline:2px solid #0e2250;outline-offset:3px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Outlined navy pill for secondary actions.",
+      "html": "<button class=\"ds-ghost\">Alle ansehen</button>",
+      "css": ".ds-ghost{min-height:52px;padding:0 28px;border:0;border-radius:999px;background:transparent;box-shadow:inset 0 0 0 1.5px #0e2250;color:#0e2250;font:600 15px 'Hanken Grotesk',system-ui,sans-serif;cursor:pointer;transition:background .25s,color .25s}.ds-ghost:hover{background:#0e2250;color:#fff}.ds-ghost:focus-visible{outline:2px solid #0e2250;outline-offset:3px}"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Pill toggle for filters and finder steps.",
+      "html": "<button class=\"ds-chip\">Damen</button> <button class=\"ds-chip ds-on\">Herren</button>",
+      "css": ".ds-chip{min-height:40px;padding:0 16px;border:0;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px #d5dbe7;color:#0e2250;font:500 14px 'Hanken Grotesk',system-ui,sans-serif;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}.ds-chip:hover{box-shadow:inset 0 0 0 1px #0e2250}.ds-chip.ds-on{background:#0e2250;color:#fff;box-shadow:none}.ds-chip:focus-visible{outline:2px solid #0e2250;outline-offset:3px}"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "refersTo": "product-card-media",
+      "description": "Tile-tinted 4:5 media with multiplied photo, brand, name and price.",
+      "html": "<div class=\"ds-pc\"><div class=\"ds-media\"><span class=\"ds-badge\">-15 %</span></div><div class=\"ds-body\"><span class=\"ds-brand\">Marke</span><b>Duftname Eau de Parfum</b><span class=\"ds-price\">59,95 EUR <s>79,95</s></span></div></div>",
+      "css": ".ds-pc{width:240px;font-family:'Hanken Grotesk',system-ui,sans-serif}.ds-media{position:relative;aspect-ratio:4/5;background:#e9edf4;border-radius:14px}.ds-badge{position:absolute;top:12px;left:12px;height:26px;padding:0 11px;border-radius:999px;background:#c8381f;color:#fff;font:700 11.5px/26px 'Hanken Grotesk',sans-serif;letter-spacing:.04em;text-transform:uppercase}.ds-body{padding:14px 4px 0;display:grid;gap:3px}.ds-brand{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5b6a8c}.ds-body b{font-weight:500;font-size:16px;color:#0e2250}.ds-price{margin-top:6px;font-weight:700;font-size:17px;color:#0e2250;font-variant-numeric:tabular-nums}.ds-price s{font-weight:400;font-size:14px;color:#5b6a8c}"
+    },
+    {
+      "name": "Free-Shipping Progress",
+      "kind": "custom",
+      "refersTo": "cart-drawer",
+      "description": "Cart drawer strip: red fill that turns green at the threshold.",
+      "html": "<div class=\"ds-ship\">Noch <b>12,40 EUR</b> bis zum kostenlosen Versand<div class=\"ds-bar\"><i></i></div></div>",
+      "css": ".ds-ship{padding:16px 24px;background:#f4f6fa;border-bottom:1px solid #d5dbe7;font:400 14px 'Hanken Grotesk',system-ui,sans-serif;color:#0e2250}.ds-ship b{font-weight:700}.ds-bar{height:8px;margin-top:10px;border-radius:8px;background:#d5dbe7;overflow:hidden}.ds-bar i{display:block;height:100%;width:68%;border-radius:8px;background:#c8381f;transition:width .9s cubic-bezier(.16,1,.3,1)}"
+    },
+    {
+      "name": "Navy Section Heading",
+      "kind": "custom",
+      "refersTo": "headline",
+      "description": "Drenched navy section with Bodoni headline and coral emphasis.",
+      "html": "<section class=\"ds-dark\"><h2>Duft<em>wochen</em></h2><p>15 % auf ausgewählte Düfte.</p></section>",
+      "css": ".ds-dark{background:#0e2250;color:#c8d2ee;padding:64px 32px;font-family:'Hanken Grotesk',system-ui,sans-serif}.ds-dark h2{margin:0;font:400 64px/.88 'Bodoni Moda','Didot',serif;letter-spacing:-.04em;color:#fff}.ds-dark h2 em{display:block;font-style:normal;color:#ff8b78}.ds-dark p{margin-top:24px;font-size:18px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Stamped Counter",
+    "overview": "A cool, pale shop floor on which one navy ink, the Gradmann stamp, does all the work. Text, buttons, selected states and the three drenched sections (Duftwochen, Vertrauen, footer) are that navy; the ground is a blue-tinged off-white; a single signal red appears only where action or money is involved. Display type is upright Bodoni Moda; everything functional is Hanken Grotesk.",
+    "keyCharacteristics": [
+      "One ink (navy) plus one accent (red); red is rare and transactional.",
+      "Navy-drenched sections alternate with the pale ground; no mid-tones between them.",
+      "Pills for every interactive control; 14px radius for product tiles, larger radii for feature panels.",
+      "Product photos are multiply-blended onto tinted tiles, so the white photo background disappears.",
+      "Motion is eased, long and decelerating (one curve for everything), and respects reduced motion."
+    ],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "Red marks action or price movement (discount, progress, count, hover fill). It is never decoration and never a section background.", "section": "colors" },
+      { "name": "The Navy Drench Rule", "body": "Emphasis sections are fully navy with white display type and coral accents; there is no gradient or half-navy treatment.", "section": "colors" },
+      { "name": "The Serif Speaks Rule", "body": "Bodoni is for headlines, product names in features, and the brand wordmark. Prices, buttons, forms and UI copy are always Hanken Grotesk.", "section": "typography" },
+      { "name": "The Soft Float Rule", "body": "Shadows are long, low-opacity and navy-tinted; no offset or hard-edged shadows.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do let navy carry text, buttons and emphasis sections; keep red to discounts, progress, counts and hover fills.",
+      "Do multiply-blend product photos on tile (or a pale tint) so white photo backgrounds vanish.",
+      "Do use pills for every interactive control and 14px for product-card media.",
+      "Do write headlines in upright Bodoni at 400 with negative tracking; use tabular numerals for prices.",
+      "Do use the single easing curve and honor reduced motion."
+    ],
+    "donts": [
+      "Don't put red on large surfaces or use it as ornament.",
+      "Don't set UI text, prices or buttons in Bodoni.",
+      "Don't use hard offset shadows; shadows stay soft and navy-tinted.",
+      "Don't introduce new radii for cards; extend from 14px (cards) and 20 to 24px (panels).",
+      "Don't add other brand colors; the only off-palette value tolerated is the third-party WhatsApp green."
+    ]
+  }
+}
