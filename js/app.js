@@ -45,14 +45,14 @@
         <img src="${p.img}" alt="" loading="lazy" width="400" height="400">
       </a>
       <button class="wish" data-wish="${p.id}" aria-pressed="${wished}" aria-label="${p.brand} ${p.name} merken">${ic('heart')}</button>
-      <div class="qa"><button class="btn" data-add="${p.id}">${ic('bag')}In den Warenkorb</button></div>
       <div class="pc-body">
         <span class="pc-brand">${p.brand}</span>
         <a class="pc-name" href="${G64.href(p)}">${p.name}${p.type && p.type !== 'Set' ? ` <span style="font-weight:400;color:var(--ink-3)">${p.type}</span>` : ''}</a>
         <span class="pc-meta">${p.size === 'Set' ? 'Geschenkset' : p.size}</span>
         <div class="pc-price">${p.from ? '<small>ab</small>' : ''}<span class="${p.uvp ? 'off' : ''}">${G64.fmt(p.price)}</span>${p.uvp ? `<s>${G64.fmt(p.uvp)}</s>` : ''}</div>
         ${p.per ? `<span class="pc-per">${p.per}</span>` : ''}
-      </div></article>`;
+      </div>
+      <div class="qa"><button class="btn" data-add="${p.id}">${ic('bag')}In den Warenkorb</button></div></article>`;
   };
 
   /* ---------- Wunschliste ---------- */
