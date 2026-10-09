@@ -61,6 +61,7 @@
     const w = G64.wishes();
     $$('[data-wish]').forEach(b => b.setAttribute('aria-pressed', w.includes(b.dataset.wish)));
     const c = $('#wishCount'); if (c) { c.textContent = w.length; c.classList.toggle('on', w.length > 0); c.parentNode.setAttribute('aria-label', `Wunschliste, ${w.length} Artikel`); }
+    if (typeof renderWish === 'function' && $('#lines')) renderWish();
   }
   G64.toggleWish = id => {
     let w = G64.wishes();
@@ -111,7 +112,7 @@
     $('#shipTxt').innerHTML = n === 0 ? `Kostenloser Versand ab <b>${G64.fmt(G64.freeShipFrom)}</b>` : left > 0 ? `Noch <b>${G64.fmt(left)}</b> bis zum kostenlosen Versand` : `<b>Geschafft:</b> Dein Versand ist kostenlos`;
     $('#shipBar').style.width = Math.min(100, total / G64.freeShipFrom * 100) + '%';
     const L = $('#lines');
-    if (!n) { L.innerHTML = `<div class="empty"><h3>Dein Warenkorb ist leer</h3><p>Entdecke Neuheiten und Geschenksets – in jedem Paket steckt eine kleine Überraschung.</p><a class="btn btn-primary" style="margin-top:20px" href="kollektion.html">Düfte entdecken</a></div>`; }
+    if (view === 'wish') {} else if (!n) { L.innerHTML = `<div class="empty"><h3>Dein Warenkorb ist leer</h3><p>Entdecke Neuheiten und Geschenksets – in jedem Paket steckt eine kleine Überraschung.</p><a class="btn btn-primary" style="margin-top:20px" href="kollektion.html">Düfte entdecken</a></div>`; }
     else L.innerHTML = c.map(l => { const p = G64.byId(l.id); return `<div class="line" data-id="${p.id}">
         <img src="${p.img}" alt="">
         <div><small>${p.brand}</small><b class="n">${p.name}${p.type !== 'Set' ? ' ' + p.type : ''}</b><small>${p.size === 'Set' ? 'Geschenkset' : p.size}</small>
@@ -121,17 +122,34 @@
     $('#shipLine').textContent = n === 0 ? '–' : left === 0 ? 'kostenlos' : G64.fmt(G64.shipping);
     $('#grand').textContent = G64.fmt(total + (n && left > 0 ? G64.shipping : 0));
     $('#checkout').disabled = !n;
-    // Upsell: günstigstes Produkt, das noch fehlt, passend zur Versandschwelle
+    // Upsells: passende Produkte zu Marke/Duftrichtung im Warenkorb
     const up = $('#upsell');
-    const cand = n && left > 0 ? P.filter(p => !c.find(l => l.id === p.id)).sort((a, b) => Math.abs(a.price - left) - Math.abs(b.price - left))[0] : null;
-    up.hidden = !cand;
-    if (cand) up.innerHTML = `<h5>Dazu passt</h5><div class="u"><img src="${cand.img}" alt=""><div><b>${cand.brand} ${cand.name}</b><small class="tnum">${G64.fmt(cand.price)}</small></div><button class="mini" data-add-up="${cand.id}">Hinzufügen</button></div>`;
+    const inCart = c.map(l => G64.byId(l.id));
+    const score = p => inCart.reduce((t, q) => t + (q.brand === p.brand ? 2 : 0) + q.family.filter(f => p.family.includes(f)).length, 0) + (left > 0 && p.price <= left + 25 ? 1 : 0);
+    const cands = n ? P.filter(p => !c.find(l => l.id === p.id)).sort((a, b) => score(b) - score(a) || b.popular - a.popular).slice(0, 3) : [];
+    up.hidden = !cands.length || view !== 'cart';
+    up.innerHTML = cands.length ? `<h5>${left > 0 ? `Noch ${G64.fmt(left)} bis Gratis-Versand – dazu passt` : 'Dazu passt'}</h5>` + cands.map(p => `<div class="u"><img src="${p.img}" alt=""><div><b>${p.brand} ${p.name}</b><small class="tnum">${p.size === 'Set' ? 'Geschenkset' : p.size} · ${G64.fmt(p.price)}</small></div><button class="mini" data-add-up="${p.id}" aria-label="${p.name} hinzufügen">+ Hinzufügen</button></div>`).join('') : '';
+    renderWish();
+  }
+  let view = 'cart';
+  function setView(v) {
+    view = v; const d = $('#drawer'); d.classList.toggle('v-wish', v === 'wish');
+    $$('.dtabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === v));
+    $('#cartFoot').hidden = v === 'wish'; $('#wishFoot').hidden = v !== 'wish'; $('#ship').hidden = v === 'wish';
+    renderCart();
+  }
+  function renderWish() {
+    const w = G64.wishes().map(G64.byId).filter(Boolean);
+    $('#dWish').textContent = w.length; $('#dCart').textContent = cart().reduce((s, l) => s + l.q, 0);
+    $('#wishAll').disabled = !w.length;
+    if (view !== 'wish') return;
+    $('#lines').innerHTML = w.length ? w.map(p => `<div class="line" data-id="${p.id}"><img src="${p.img}" alt=""><div><small>${p.brand}</small><b class="n">${p.name}${p.type !== 'Set' ? ' ' + p.type : ''}</b><small>${p.size === 'Set' ? 'Geschenkset' : p.size}</small><button class="mini" style="margin-top:10px" data-wadd="${p.id}">In den Warenkorb</button></div><div class="pr tnum">${G64.fmt(p.price)}<br><button class="rm" data-wrm>Entfernen</button></div></div>`).join('') : `<div class="empty"><h3>Deine Wunschliste ist leer</h3><p>Tippe bei einem Produkt auf das Herz, um es hier zu merken.</p><a class="btn btn-primary" style="margin-top:20px" href="kollektion.html">Düfte entdecken</a></div>`;
   }
   let lastFocus;
   function trap(e, box) { if (e.key !== 'Tab') return; const f = [...box.querySelectorAll('a[href],button:not([disabled]),input,select')].filter(x => x.offsetParent); if (!f.length) return; const a = f[0], z = f[f.length - 1]; if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } }
   function openDrawer() { lastFocus = document.activeElement; $('#drawer').classList.add('open'); document.body.style.overflow = 'hidden'; $('#drawer .close').focus(); }
   function closeDrawer() { $('#drawer').classList.remove('open'); document.body.style.overflow = ''; lastFocus && lastFocus.focus && lastFocus.focus(); }
-  G64.openCart = openDrawer;
+  G64.openCart = openDrawer; G64.openWish = () => { setView('wish'); openDrawer(); };
 
   /* ---------- Chrome ---------- */
   const NAV = [
@@ -141,6 +159,13 @@
   ];
   const feat = G64.byId('libre-vanille');
   const page = location.pathname.split('/').pop() || 'index.html';
+  const PAY = `<div class="pay" aria-label="Zahlungsarten">
+    <svg viewBox="0 0 48 30" role="img" aria-label="Visa"><rect x=".5" y=".5" width="47" height="29" rx="5" fill="#fff" stroke="#d5dbe7"/><text x="24" y="20.500" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-style="italic" font-size="14" fill="#1a1f71" letter-spacing="-.3">VISA</text></svg>
+    <svg viewBox="0 0 48 30" role="img" aria-label="Mastercard"><rect x=".5" y=".5" width="47" height="29" rx="5" fill="#fff" stroke="#d5dbe7"/><circle cx="19" cy="15" r="8" fill="#eb001b"/><circle cx="29" cy="15" r="8" fill="#f79e1b"/><path d="M24 8.800a8 8 0 0 1 0 12.400 8 8 0 0 1 0-12.400Z" fill="#ff5f00"/></svg>
+    <svg viewBox="0 0 48 30" role="img" aria-label="PayPal"><rect x=".5" y=".5" width="47" height="29" rx="5" fill="#fff" stroke="#d5dbe7"/><text x="24" y="19.500" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="11.500" fill="#003087">Pay<tspan fill="#009cde">Pal</tspan></text></svg>
+    <svg viewBox="0 0 48 30" role="img" aria-label="Paydirekt"><rect x=".5" y=".5" width="47" height="29" rx="5" fill="#fff" stroke="#d5dbe7"/><text x="24" y="18.500" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="8.500" fill="#0066b3">pay<tspan fill="#e30613">direkt</tspan></text></svg>
+    <svg viewBox="0 0 48 30" role="img" aria-label="Überweisung"><rect x=".5" y=".5" width="47" height="29" rx="5" fill="#fff" stroke="#d5dbe7"/><path d="M24 6 12 11.500h24L24 6Zm-9 7v7m6-7v7m6-7v7m6-7v7M12 22h24" fill="none" stroke="#0e2250" stroke-width="1.800" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>`;
   const header = `
   <a class="skip" href="#main">Zum Inhalt springen</a>
   <div class="announce" role="region" aria-label="Aktionen"><div class="wrap">
@@ -159,7 +184,7 @@
     <div class="hdr-r">
       <a class="ibtn hide-m" href="#" aria-label="Filialfinder">${ic('pin')}</a>
       <a class="ibtn hide-m" href="#" aria-label="Konto">${ic('user')}</a>
-      <a class="ibtn" href="kollektion.html?wish=1" aria-label="Wunschliste">${ic('heart')}<span class="count" id="wishCount">0</span></a>
+      <button class="ibtn" id="wishBtn" aria-label="Wunschliste">${ic('heart')}<span class="count" id="wishCount">0</span></button>
       <button class="ibtn" id="bagBtn" aria-label="Warenkorb öffnen">${ic('bag')}<span class="count" id="bagCount">0</span></button>
     </div></div>
     <nav class="nav" aria-label="Hauptnavigation"><div class="wrap"><ul>
@@ -183,17 +208,19 @@
     <div class="search-grid"><div><h5>Beliebt</h5><div class="chips" id="sugg"></div></div><div><h5 id="resH">Beliebt</h5><ul class="res" id="res"></ul></div></div>
   </div></div>
   <div class="drawer" id="drawer" aria-hidden="true"><div class="scrim" data-close-d></div><aside class="panel" role="dialog" aria-modal="true" aria-label="Warenkorb">
-    <header><h2>Warenkorb</h2><button class="ibtn close" data-close-d aria-label="Warenkorb schließen">${ic('x')}</button></header>
+    <header><div class="dtabs" role="group" aria-label="Ansicht"><button data-view="cart" aria-pressed="true">Warenkorb <span id="dCart">0</span></button><button data-view="wish" aria-pressed="false">${ic('heart')}Wunschliste <span id="dWish">0</span></button></div><button class="ibtn close" data-close-d aria-label="Schließen">${ic('x')}</button></header>
     <div class="ship" id="ship"><span id="shipTxt"></span><div class="bar"><i id="shipBar"></i></div></div>
     <div class="lines" id="lines"></div>
     <div class="upsell" id="upsell" hidden></div>
-    <footer>
+    <footer id="cartFoot">
       <div class="row"><span>Zwischensumme</span><span class="tnum" id="sub"></span></div>
       <div class="row"><span>Versand (DE)</span><span class="tnum" id="shipLine"></span></div>
       <div class="row total"><span>Gesamt</span><span class="tnum" id="grand"></span></div>
       <button class="btn btn-primary btn-block" id="checkout">Zur Kasse${ic('arrow', 'arr')}</button>
-      <p class="small" style="text-align:center">Inkl. MwSt., zzgl. Versand. Zahlung per Kreditkarte, PayPal oder Überweisung.</p>
-    </footer></aside></div>
+      <p class="small" style="text-align:center">Inkl. MwSt., zzgl. Versand.</p>
+      ${PAY}
+    </footer>
+    <footer id="wishFoot" hidden><button class="btn btn-primary btn-block" id="wishAll">Alle in den Warenkorb</button>${PAY}</footer></aside></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <a class="wa" href="#" aria-label="Beratung per WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.600 15.100L2 22l5-1.300A10 10 0 1 0 12 2Zm5.100 14c-.2.600-1.200 1.200-1.700 1.200-.400.100-1 .100-1.600-.100-2.900-1.200-4.800-4.200-5-4.400-.1-.2-1.200-1.600-1.200-3s.7-2 1-2.300c.200-.3.500-.3.700-.3h.5c.2 0 .4 0 .6.500l.8 2c.1.200.1.400 0 .5l-.4.600c-.1.200-.3.300-.1.600.7 1.100 1.600 2 2.700 2.500.3.100.4.100.6-.1l.7-.9c.2-.2.400-.2.600-.1l1.900.9c.2.100.4.200.4.300.1.200.1.800-.1 1.400Z"/></svg><span>Beratung per WhatsApp</span></a>`;
   document.body.insertAdjacentHTML('afterbegin', header);
@@ -249,10 +276,14 @@
     $$('[data-close-m]').forEach(b => b.onclick = () => { mn.classList.remove('open'); mn.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; });
 
     /* Drawer */
-    $('#bagBtn').onclick = openDrawer;
+    $('#bagBtn').onclick = () => { setView('cart'); openDrawer(); };
+    $('#wishBtn').onclick = () => G64.openWish();
+    $$('.dtabs button').forEach(b => b.onclick = () => setView(b.dataset.view));
+    $('#wishAll').onclick = () => { const w = G64.wishes(); const c = cart(); w.forEach(id => { const l = c.find(x => x.id === id); l ? l.q++ : c.push({ id, q: 1 }); }); store.set('g64wish', []); saveCart(c); syncWishUI(); setView('cart'); toast('Alle Artikel im Warenkorb'); };
     $$('[data-close-d]').forEach(b => b.onclick = closeDrawer);
     $('#lines').onclick = e => {
       const row = e.target.closest('.line'); if (!row) return; const id = row.dataset.id; const c = cart(); const l = c.find(x => x.id === id);
+      if (view === 'wish') { if (e.target.closest('[data-wrm]')) return G64.toggleWish(id); if (e.target.closest('[data-wadd]')) { l ? l.q++ : c.push({ id, q: 1 }); store.set('g64wish', G64.wishes().filter(x => x !== id)); saveCart(c); syncWishUI(); toast('In den Warenkorb verschoben'); } return; }
       if (e.target.closest('[data-rm]')) return saveCart(c.filter(x => x.id !== id));
       const d = e.target.closest('[data-q]'); if (d) { l.q += +d.dataset.q; saveCart(l.q <= 0 ? c.filter(x => x.id !== id) : c); }
     };
